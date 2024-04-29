@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendário</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .table-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start; /* Alinha o nome da sala à esquerda */
+            height: 100vh;
+            margin-left: 300px; /* Adiciona margem à esquerda */
+            margin-right: 300px; /* Adiciona margem à direita */
+        }
+        .selector {
+            align-self: flex-end; /* Alinha o seletor à direita */
+            margin-bottom: 10px; /* Adiciona uma margem abaixo do seletor */
+        }
+    </style>
+</head>
+<body>
+<div class="table-container">
+    <h2 class="room-name">Sala 1</h2> <!-- Adiciona o nome da sala -->
+    <input class="selector" type="week"> <!-- Adiciona o primeiro seletor de semana -->
+    <input class="selector" type="date"> <!-- Adiciona um seletor de data -->
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Horário</th>
+            <th>Segunda</th>
+            <th>Terça</th>
+            <th>Quarta</th>
+            <th>Quinta</th>
+            <th>Sexta</th>
+            <th>Sábado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <script>
+            var selectedCells = []; // Array para armazenar as células selecionadas
+
+            var startHour = 8;
+            var endHour = 23;
+            var interval = 1.5;
+            for (var i = startHour; i < endHour; i += interval) {
+                var nextInterval = i + interval;
+                document.write('<tr>');
+                document.write('<td>' + formatTime(i) + ' - ' + formatTime(nextInterval) + '</td>');
+                for (var j = 0; j < 6; j++) {
+                    document.write('<td onclick="selectCell(this)"></td>');
+                }
+                document.write('</tr>');
+            }
+
+            function formatTime(time) {
+                var hours = Math.floor(time);
+                var minutes = (time % 1 !== 0 ? '30' : '00');
+                return hours + ':' + minutes;
+            }
+
+            function selectCell(cell) {
+                cell.classList.toggle('table-primary');
+                var dayOfWeek = cell.parentNode.parentNode.children[0].children[cell.cellIndex].textContent;
+                var time = cell.parentNode.children[0].textContent.split(' - ')[0];
+                var selectedCellInfo = dayOfWeek + ' às ' + time;
+                var index = selectedCells.indexOf(selectedCellInfo);
+                if (index === -1) {
+                    selectedCells.push(selectedCellInfo);
+                } else {
+                    selectedCells.splice(index, 1);
+                }
+            }
+        </script>
+        </tbody>
+    </table>
+    <form action="Reserva.html" method="post">
+        <input type="hidden" name="selectedCells" id="selectedCellsInput">
+        <button type="submit" class="btn btn-primary">Enviar Seleções</button>
+    </form>
+</div>
+<script>
+    // Atualiza o valor do input hidden com as células selecionadas antes de enviar o formulário
+    document.querySelector('#selectedCellsInput').value = JSON.stringify(selectedCells);
+</script>
+</body>
+</html>
+

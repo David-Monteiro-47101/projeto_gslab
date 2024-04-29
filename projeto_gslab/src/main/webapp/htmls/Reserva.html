@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Células Selecionadas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Células Selecionadas</h1>
+    <div id="selectedCells"></div>
+</div>
+
+<script>
+    // Verifica se há dados de células selecionadas no URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var selectedCellsString = urlParams.get('selectedCells');
+
+    console.log("String de células selecionadas:", selectedCellsString); // Adicionando um log para verificar a string de células selecionadas
+
+    // Converte a string JSON de células selecionadas de volta para um array
+    var selectedCells = JSON.parse(selectedCellsString);
+
+    console.log("Células selecionadas:", selectedCells); // Adicionando um log para verificar o array de células selecionadas
+
+    // Exibe as células selecionadas na página
+    var selectedCellsDiv = document.getElementById('selectedCells');
+    if (selectedCells && selectedCells.length > 0) {
+        var p = document.createElement('p');
+        p.textContent = 'Você selecionou as seguintes células:';
+        selectedCellsDiv.appendChild(p);
+
+        var ul = document.createElement('ul');
+        selectedCells.forEach(function(cell) {
+            var li = document.createElement('li');
+            li.textContent = cell;
+            ul.appendChild(li);
+        });
+        selectedCellsDiv.appendChild(ul);
+    } else {
+        var p = document.createElement('p');
+        p.textContent = 'Nenhuma célula selecionada.';
+        selectedCellsDiv.appendChild(p);
+    }
+</script>
+
+</body>
+</html>
+
+
