@@ -1,4 +1,4 @@
-package projeto_gslab;
+package DAO;
 
 import java.sql.Date;
 

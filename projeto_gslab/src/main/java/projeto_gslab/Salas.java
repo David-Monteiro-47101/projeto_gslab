@@ -34,10 +34,11 @@ public class Salas extends HttpServlet {
         }
         
         //System.out.println("servlet salas: " + salas);
+        dataBaseManager.disconnect();
         
         response.setContentType("text/html; charset=UTF-8");
         getServletContext().getRequestDispatcher("/Salas.jsp").forward(request, response);
-        dataBaseManager.disconnect();
+        
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -55,6 +55,7 @@ public class SalvarDetalhesSala extends HttpServlet {
         }
         
         dataBaseManager.disconnect();
+        
         response.setContentType("text/html; charset=UTF-8");
         getServletContext().getRequestDispatcher("/Admin.jsp").forward(request, response);
     	

@@ -36,6 +36,7 @@ public class ProcurarSala extends HttpServlet {
         //System.out.println("servlet salas: " + salas);
         
         dataBaseManager.disconnect();
+        
         response.setContentType("text/html; charset=UTF-8");
         getServletContext().getRequestDispatcher("/ProcurarSala.jsp").forward(request, response);
     }

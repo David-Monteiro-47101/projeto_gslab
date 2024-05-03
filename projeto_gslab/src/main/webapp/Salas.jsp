@@ -34,14 +34,14 @@
     <h1 class="display-4 font-weight-bold">Departamento DEETC</h1>
     <p class="lead">Escolha a sala:</p>
     <div id="salas">
-        <% 
-            ArrayList<String> salas = (ArrayList<String>) request.getAttribute("salas");
-            for(String sala : salas) {
-        %>
-            <button class="btn btn-outline-dark btn-lg" onclick="window.location.href='Calendario.html'"><%= sala %></button>
-        <% 
-            }
-        %>
+		<% 
+		    ArrayList<String> salas = (ArrayList<String>) request.getAttribute("salas");
+		    for(String sala : salas) {
+		%>
+		    <a href="Calendario?sala=<%= sala %>" class="btn btn-outline-dark btn-lg"><%= sala %></a>
+		<% 
+		    }
+		%>
     </div>
 </div>
 </body>
