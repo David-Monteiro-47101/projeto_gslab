@@ -9,11 +9,28 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import projeto_gslab.DataBaseConfig;
 import projeto_gslab.DataBaseManager;
 
 @WebServlet("/CriarSala")
 public class CriarSala extends HttpServlet {
+	
     private static final long serialVersionUID = 1L;
+    private static DataBaseConfig cp = null;
+
+    public void init() throws ServletException {
+    	String dbUrl = getServletContext().getInitParameter("db.url");
+        String dbUsername = getServletContext().getInitParameter("db.user");
+        String dbPass = getServletContext().getInitParameter("db.password");    	
+    	
+    	Object pool = getServletContext().getAttribute("connPoolId");
+    	if ( pool == null) {
+            cp = new DataBaseConfig(dbUrl, dbUsername, dbPass);
+            getServletContext().setAttribute("connPoolId", cp);
+    	} else if(pool instanceof DataBaseConfig) {
+    		cp = (DataBaseConfig)pool;	
+    	}
+    }
        
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -34,13 +51,13 @@ public class CriarSala extends HttpServlet {
         //System.out.println("CriarSala capacidade: " + capacidade);
         //System.out.println("CriarSala email: " + email);
         
-        DataBaseManager dataBaseManager = new DataBaseManager();
+        //DataBaseManager dataBaseManager = new DataBaseManager();
         
         String query = "INSERT INTO projeto.sala(nome, capacidade, localizacao, email_utilizador) "
                 + "SELECT * FROM (SELECT '" + nome + "', " + capacidade + ", '" + localizacao + "', '" + email + "') AS tmp "
                 + "WHERE NOT EXISTS (SELECT nome FROM projeto.sala WHERE nome = '" + nome + "') LIMIT 1;";
 
-        int rowsAffected = dataBaseManager.executeUpdate(query);
+        int rowsAffected = cp.executeUpdate(query);
         
         if (rowsAffected == 0) {
             System.out.println("Uma sala com esse nome já existe: " + nome);
@@ -50,7 +67,7 @@ public class CriarSala extends HttpServlet {
             request.setAttribute("alert", "Sala adicionada com sucesso.");
         }
         
-        dataBaseManager.disconnect();
+        //dataBaseManager.disconnect();
         
         response.setContentType("text/html; charset=UTF-8");
         getServletContext().getRequestDispatcher("/Admin.jsp").forward(request, response);

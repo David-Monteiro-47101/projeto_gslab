@@ -10,32 +10,24 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/Reserva")
-public class Reserva extends HttpServlet {
+@WebServlet("/Calendario1")
+public class Calendario1 extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
     	String sala = request.getParameter("sala");
-    	System.out.println("Reserva sala: " + sala);
+    	request.setAttribute("sala", sala);
+    	System.out.println("Calendario sala: " + sala);
     	
-    	
-    	String data = request.getParameter("data");
-    	System.out.println("Reserva data: " + data);
-    	
-        String selectedCellsString = request.getParameter("selectedCells");
-        List<String> selectedCells = Arrays.asList(selectedCellsString.split(";"));
-        // Imprime a lista de células selecionadas no console do servidor
-        System.out.println("Celulas selecionadas: " + selectedCells);
-  
-
-        
         response.setContentType("text/html; charset=UTF-8");
-        getServletContext().getRequestDispatcher("/Reserva.html").forward(request, response);
+        getServletContext().getRequestDispatcher("/Calendario.jsp").forward(request, response);
     	
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
+
 }

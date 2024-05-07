@@ -10,17 +10,34 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import projeto_gslab.DataBaseConfig;
 import projeto_gslab.DataBaseManager;
 
 @WebServlet("/ProcurarSala")
 public class ProcurarSala extends HttpServlet {
+	
     private static final long serialVersionUID = 1L;
+    private static DataBaseConfig cp = null;
+
+    public void init() throws ServletException {
+    	String dbUrl = getServletContext().getInitParameter("db.url");
+        String dbUsername = getServletContext().getInitParameter("db.user");
+        String dbPass = getServletContext().getInitParameter("db.password");    	
+    	
+    	Object pool = getServletContext().getAttribute("connPoolId");
+    	if ( pool == null) {
+            cp = new DataBaseConfig(dbUrl, dbUsername, dbPass);
+            getServletContext().setAttribute("connPoolId", cp);
+    	} else if(pool instanceof DataBaseConfig) {
+    		cp = (DataBaseConfig)pool;	
+    	}
+    }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DataBaseManager dataBaseManager = new DataBaseManager();
+        //DataBaseManager dataBaseManager = new DataBaseManager();
         
         String query = "SELECT * FROM projeto.sala"; 
-        ResultSet rs = dataBaseManager.executeQuery(query);
+        ResultSet rs = cp.executeQuery(query);
         
         ArrayList<String> salas = new ArrayList<>();
 		
@@ -35,7 +52,7 @@ public class ProcurarSala extends HttpServlet {
         
         //System.out.println("servlet salas: " + salas);
         
-        dataBaseManager.disconnect();
+        //dataBaseManager.disconnect();
         
         response.setContentType("text/html; charset=UTF-8");
         getServletContext().getRequestDispatcher("/ProcurarSala.jsp").forward(request, response);

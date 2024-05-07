@@ -14,7 +14,23 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	
+    private static final long serialVersionUID = 1L;
+    private static DataBaseConfig cp = null;
+
+    public void init() throws ServletException {
+    	String dbUrl = getServletContext().getInitParameter("db.url");
+        String dbUsername = getServletContext().getInitParameter("db.user");
+        String dbPass = getServletContext().getInitParameter("db.password");    	
+    	
+    	Object pool = getServletContext().getAttribute("connPoolId");
+    	if ( pool == null) {
+            cp = new DataBaseConfig(dbUrl, dbUsername, dbPass);
+            getServletContext().setAttribute("connPoolId", cp);
+    	} else if(pool instanceof DataBaseConfig) {
+    		cp = (DataBaseConfig)pool;	
+    	}
+    }
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -26,7 +42,7 @@ public class Login extends HttpServlet {
 		//String password = "aa123";
 		//System.out.println("password : " + password);
 		
-		DataBaseManager dataBaseManager = new DataBaseManager();
+		//DataBaseManager dataBaseManager = new DataBaseManager();
 		
 		
 		String query = "SELECT u.email, u.nome, ur.papel " +
@@ -35,7 +51,7 @@ public class Login extends HttpServlet {
 	               	   "WHERE u.email = '" + email + "' AND u.password = '" + password + "'";
  
 		
-		ResultSet rs = dataBaseManager.executeQuery(query);
+		ResultSet rs = cp.executeQuery(query);
 		
 		String email1 = null;
 		ArrayList<String> papeis = new ArrayList<>();
@@ -68,7 +84,7 @@ public class Login extends HttpServlet {
 		
 		//System.out.println("Login.java papel : " + papeis);
 		
-		dataBaseManager.disconnect();
+		//dataBaseManager.disconnect();
 
 		response.setContentType("text/html; charset=UTF-8");
 		getServletContext().getRequestDispatcher("/Roles.jsp").forward(request, response);

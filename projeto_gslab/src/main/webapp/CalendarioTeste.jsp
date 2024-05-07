@@ -22,10 +22,6 @@
             overflow-y: auto;
             height: 600px; /* Increase the height of the table */
         }
-        .selected {
-            background-color: #007bff;
-            color: white;
-        }
     </style>
 </head>
 <body>
@@ -35,9 +31,8 @@
 <div class="table-container">
     <h2 class="room-name"><%= sala %></h2> <!-- Adiciona o nome da sala -->
     <form action="Reserva1" method="post">
-        <input class="selector" type="date" id="dateSelector" name="data" onchange="updateHeaders()">
+        <input class="selector" type="date" id="dateSelector" name="data">
         <input type="hidden" name="sala" id="salaInput" value="<%= sala %>"> <!-- Adiciona o nome da sala -->
-        <input type="hidden" name="selectedSlots" id="selectedSlotsInput">
         <button type="submit" class="btn btn-primary">Enviar Data</button>
     </form>
     <div class="scrollable-table">
@@ -56,7 +51,6 @@
             <tbody>
             <script>
                 var selectedRoom = "<%= sala %>"; // Nome da sala
-                var selectedSlots = [];
 
                 var startHour = 8;
                 var endHour = 23;
@@ -66,7 +60,7 @@
                     document.write('<tr>');
                     document.write('<td>' + formatTime(i) + ' - ' + formatTime(nextInterval) + '</td>');
                     for (var j = 0; j < 6; j++) {
-                        document.write('<td data-day="' + j + '" data-position="' + i + '" onclick="selectSlot(this)"></td>');
+                        document.write('<td></td>'); // Remove a função onclick
                     }
                     document.write('</tr>');
                 }
@@ -85,30 +79,8 @@
                         var date = new Date(startOfWeek);
                         date.setDate(date.getDate() + i);
                         document.getElementById('day' + (i+1)).textContent = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][i] + ' (' + date.toLocaleDateString('pt-PT') + ')';
-                        // Set the data-date attribute of each cell in this column to the date
-                        document.querySelectorAll('[data-day="' + i + '"]').forEach(function(cell) {
-                            cell.setAttribute('data-date', date.toLocaleDateString('pt-PT'));
-                        });
                     }
                 }
-
-                function selectSlot(cell) {
-                    var cellIndex = selectedSlots.indexOf(cell);
-                    if (cellIndex === -1) {
-                        selectedSlots.push(cell);
-                        cell.classList.add('selected');
-                    } else {
-                        selectedSlots.splice(cellIndex, 1);
-                        cell.classList.remove('selected');
-                    }
-                    // Include the date in the selectedSlotsInput field
-                    document.getElementById('selectedSlotsInput').value = selectedSlots.map(function(cell) {
-                        return cell.getAttribute('data-date') + ',' + cell.getAttribute('data-position');
-                    }).join(';');
-                }
-
-                // Call updateHeaders when the page loads
-                updateHeaders();
             </script>
             </tbody>
         </table>

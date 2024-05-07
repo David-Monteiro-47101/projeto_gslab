@@ -9,33 +9,26 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  
   <listener>
     <listener-class>org.h2.server.web.JakartaDbStarter</listener-class>
   </listener>
-  
   <display-name>projeto_gslab</display-name>
-  
   <context-param>
     <param-name>db.url</param-name>
     <param-value>jdbc:h2:tcp://localhost/~/test</param-value>
   </context-param>
-  
   <context-param>
     <param-name>db.user</param-name>
     <param-value>sa</param-value>
   </context-param>
-
   <context-param>
     <param-name>db.password</param-name>
     <param-value>47101</param-value>
   </context-param>
-
   <context-param>
     <param-name>db.tcpServer</param-name>
     <param-value>-tcpAllowOthers</param-value>
   </context-param>
-  
   <servlet>
     <servlet-name>H2Console</servlet-name>
     <servlet-class>org.h2.server.web.JakartaWebServlet</servlet-class>
@@ -45,10 +38,18 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>H2Console</servlet-name>
     <url-pattern>/console/*</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <description></description>
+    <display-name>fsffs</display-name>
+    <servlet-name>fsffs</servlet-name>
+    <servlet-class>projeto_gslab.fsffs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>fsffs</servlet-name>
+    <url-pattern>/fsffs</url-pattern>
+  </servlet-mapping>
 </web-app>

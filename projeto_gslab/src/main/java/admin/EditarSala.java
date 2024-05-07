@@ -10,21 +10,38 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import projeto_gslab.DataBaseConfig;
 import projeto_gslab.DataBaseManager;
 
 @WebServlet("/EditarSala")
 public class EditarSala extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	
+    private static final long serialVersionUID = 1L;
+    private static DataBaseConfig cp = null;
+
+    public void init() throws ServletException {
+    	String dbUrl = getServletContext().getInitParameter("db.url");
+        String dbUsername = getServletContext().getInitParameter("db.user");
+        String dbPass = getServletContext().getInitParameter("db.password");    	
+    	
+    	Object pool = getServletContext().getAttribute("connPoolId");
+    	if ( pool == null) {
+            cp = new DataBaseConfig(dbUrl, dbUsername, dbPass);
+            getServletContext().setAttribute("connPoolId", cp);
+    	} else if(pool instanceof DataBaseConfig) {
+    		cp = (DataBaseConfig)pool;	
+    	}
+    }
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		DataBaseManager dataBaseManager = new DataBaseManager();
+		//DataBaseManager dataBaseManager = new DataBaseManager();
 		
 		String sala = request.getParameter("Sala");
 		System.out.println("Sala: " + sala);
 		
 		String query = "SELECT localizacao, capacidade FROM projeto.sala WHERE nome = '" + sala + "';"; 
-        ResultSet rs = dataBaseManager.executeQuery(query);
+        ResultSet rs = cp.executeQuery(query);
 		
 		String localizacao = null;
 		Integer capacidade = null;
@@ -50,7 +67,7 @@ public class EditarSala extends HttpServlet {
 		System.out.println("localizacao: " + localizacao);
 		System.out.println("capacidade: " + capacidade);
 		
-		dataBaseManager.disconnect();
+		//dataBaseManager.disconnect();
 		
         response.setContentType("text/html; charset=UTF-8");
         getServletContext().getRequestDispatcher("/EditarSala.jsp").forward(request, response);

@@ -7,11 +7,28 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import projeto_gslab.DataBaseConfig;
 import projeto_gslab.DataBaseManager;
 
 @WebServlet("/CriarUtilizador")
 public class CriarUtilizador extends HttpServlet {
+	
     private static final long serialVersionUID = 1L;
+    private static DataBaseConfig cp = null;
+
+    public void init() throws ServletException {
+    	String dbUrl = getServletContext().getInitParameter("db.url");
+        String dbUsername = getServletContext().getInitParameter("db.user");
+        String dbPass = getServletContext().getInitParameter("db.password");    	
+    	
+    	Object pool = getServletContext().getAttribute("connPoolId");
+    	if ( pool == null) {
+            cp = new DataBaseConfig(dbUrl, dbUsername, dbPass);
+            getServletContext().setAttribute("connPoolId", cp);
+    	} else if(pool instanceof DataBaseConfig) {
+    		cp = (DataBaseConfig)pool;	
+    	}
+    }
        
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nome = request.getParameter("nome");
@@ -23,14 +40,14 @@ public class CriarUtilizador extends HttpServlet {
         //System.out.println("CriarUtilizador email: " + email);
         //System.out.println("CriarUtilizador password: " + password);   
 
-        DataBaseManager dataBaseManager = new DataBaseManager();
+        //DataBaseManager dataBaseManager = new DataBaseManager();
         
         // Inserir informações do usuário
         String query = "INSERT INTO projeto.utilizador(email, nome, password) "
                     + "SELECT * FROM (SELECT '" + email + "', '" + nome + "', '" + password + "') AS tmp "
                     + "WHERE NOT EXISTS (SELECT email FROM projeto.utilizador WHERE email = '" + email + "') LIMIT 1;";
 
-        int rowsAffected = dataBaseManager.executeUpdate(query);
+        int rowsAffected = cp.executeUpdate(query);
         
         if (rowsAffected == 0) {
             System.out.println("Um utilizador com esse email já existe: " + email);
@@ -48,11 +65,11 @@ public class CriarUtilizador extends HttpServlet {
                 }
                 query2.deleteCharAt(query2.length() - 1); // Remover a vírgula extra no final
 
-                dataBaseManager.executeUpdate(query2.toString());
+                cp.executeUpdate(query2.toString());
             }
         }
 
-        dataBaseManager.disconnect();
+        //dataBaseManager.disconnect();
         
         response.setContentType("text/html; charset=UTF-8");
         getServletContext().getRequestDispatcher("/Admin.jsp").forward(request, response);
