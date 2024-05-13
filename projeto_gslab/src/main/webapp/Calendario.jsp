@@ -34,7 +34,7 @@
 %>
 <div class="table-container">
     <h2 class="room-name"><%= sala %></h2> <!-- Adiciona o nome da sala -->
-    <form action="Reserva1" method="post">
+    <form action="Reserva" method="post">
         <input class="selector" type="date" id="dateSelector" name="data" onchange="updateHeaders()">
         <input type="hidden" name="sala" id="salaInput" value="<%= sala %>"> <!-- Adiciona o nome da sala -->
         <input type="hidden" name="selectedSlots" id="selectedSlotsInput">
@@ -102,8 +102,8 @@
                         cell.classList.remove('selected');
                     }
                     // Include the date in the selectedSlotsInput field
-                    document.getElementById('selectedSlotsInput').value = selectedSlots.map(function(cell) {
-                        return cell.getAttribute('data-date') + ',' + cell.getAttribute('data-position');
+                    document.getElementById('selectedSlotsInput').value = selectedSlots.map(function(cell, index) {
+                        return cell.getAttribute('data-date') + ',' + (index + 1); // Use the index + 1 as the slot number
                     }).join(';');
                 }
 

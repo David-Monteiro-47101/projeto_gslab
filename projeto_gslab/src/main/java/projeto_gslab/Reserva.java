@@ -10,20 +10,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/Reserva1")
-public class Reserva1 extends HttpServlet {
+@WebServlet("/Reserva")
+public class Reserva extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
         String sala = request.getParameter("sala");
-        String data = request.getParameter("data");
         String selectedSlots = request.getParameter("selectedSlots");
 
-        System.out.println("Sala: " + sala);
-        System.out.println("Data: " + data);
-        System.out.println("Selected Slots: " + selectedSlots);
+        //System.out.println("Sala: " + sala);
+        //System.out.println("Selected Slots: " + selectedSlots);
 
         // Split the selectedSlots string into an array of slots
         String[] slots = selectedSlots.split(";");
@@ -37,17 +35,16 @@ public class Reserva1 extends HttpServlet {
 
             System.out.println("Day: " + day + " Slot: " + position);
 
-            // Process the day and position as needed
-            // ...
         }
 
-        // Redirect to a confirmation page or do something else
-        // ...
+        request.setAttribute("sala", sala);
+        request.setAttribute("selectedSlots", selectedSlots);
+
   
 
         
         response.setContentType("text/html; charset=UTF-8");
-        getServletContext().getRequestDispatcher("/Reserva.html").forward(request, response);
+        getServletContext().getRequestDispatcher("/Reserva.jsp").forward(request, response);
     	
     }
     
