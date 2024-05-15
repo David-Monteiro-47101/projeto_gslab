@@ -102,8 +102,10 @@
                         cell.classList.remove('selected');
                     }
                     // Include the date in the selectedSlotsInput field
-                    document.getElementById('selectedSlotsInput').value = selectedSlots.map(function(cell, index) {
-                        return cell.getAttribute('data-date') + ',' + (index + 1); // Use the index + 1 as the slot number
+                    document.getElementById('selectedSlotsInput').value = selectedSlots.map(function(cell) {
+                        var position = parseFloat(cell.getAttribute('data-position'));
+                        var slotNumber = (position - startHour) * (1 / interval) + 1; // Calculate the slot number
+                        return cell.getAttribute('data-date') + ',' + slotNumber;
                     }).join(';');
                 }
 

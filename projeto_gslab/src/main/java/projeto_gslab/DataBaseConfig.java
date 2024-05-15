@@ -37,6 +37,7 @@ public class DataBaseConfig {
              Statement stmt = conn.createStatement();
             int linhasAfetadas = stmt.executeUpdate(query);
             System.out.println(linhasAfetadas + " linhas afetadas.");
+            conn.close();
             return linhasAfetadas;
         } catch (SQLException e) {
             System.err.println("Erro ao executar a atualização: " + e.getMessage());

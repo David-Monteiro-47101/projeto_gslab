@@ -82,10 +82,10 @@
                 window.location.href = 'Admin.jsp'; // Redireciona para a página do Administrador
                 break;
             case 'coordenador':
-            	window.location.href = 'Salas'; // Redireciona para o servlet "Salas"
+            	window.location.href = 'SalasAluno'; // Redireciona para o servlet "Salas"
                 break;
             case 'professor':
-            	window.location.href = 'Salas'; // Redireciona para o servlet "Salas"
+            	window.location.href = 'SalasAluno'; // Redireciona para o servlet "Salas"
                 break;
             // Adicione outras opções de função e redirecionamentos conforme necessário
         }

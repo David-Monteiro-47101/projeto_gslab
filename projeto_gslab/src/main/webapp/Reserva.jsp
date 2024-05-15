@@ -35,7 +35,7 @@
         %>
     </ul>
     <!-- Adicionando o formulário para reserva -->
-    <form action="Reserva3" method="post">
+    <form action="Reserva4" method="post">
         <!-- Campos ocultos para enviar dados -->
         <input type="hidden" name="sala" value="<%= sala %>">
         <input type="hidden" name="selectedSlots" value="<%= selectedSlots %>">

@@ -22,6 +22,10 @@
             overflow-y: auto;
             height: 600px; /* Increase the height of the table */
         }
+        .selected {
+            background-color: #007bff;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -30,10 +34,9 @@
 %>
 <div class="table-container">
     <h2 class="room-name"><%= sala %></h2> <!-- Adiciona o nome da sala -->
-    <form action="Reserva1" method="post">
-        <input class="selector" type="date" id="dateSelector" name="data">
+    <form action="CalendarioAluno" method="post">
+        <input class="selector" type="date" id="dateSelector" name="data" onchange="updateHeaders()">
         <input type="hidden" name="sala" id="salaInput" value="<%= sala %>"> <!-- Adiciona o nome da sala -->
-        <button type="submit" class="btn btn-primary">Enviar Data</button>
     </form>
     <div class="scrollable-table">
         <table class="table table-bordered">
@@ -60,7 +63,7 @@
                     document.write('<tr>');
                     document.write('<td>' + formatTime(i) + ' - ' + formatTime(nextInterval) + '</td>');
                     for (var j = 0; j < 6; j++) {
-                        document.write('<td></td>'); // Remove a função onclick
+                        document.write('<td data-day="' + j + '" data-position="' + i + '"></td>'); // Removed onclick attribute
                     }
                     document.write('</tr>');
                 }
@@ -72,15 +75,36 @@
                 }
 
                 function updateHeaders() {
-                    var selectedDate = new Date(document.getElementById('dateSelector').value);
+                    var dateSelector = document.getElementById('dateSelector');
+                    var selectedDate = new Date(dateSelector.value);
+                    var shouldSubmitForm = dateSelector.value !== '';
+
+                    // If the date selector doesn't have a value, set it to the current date
+                    if (!shouldSubmitForm) {
+                        selectedDate = new Date();
+                        dateSelector.value = selectedDate.toISOString().split('T')[0];
+                    }
+
                     var startOfWeek = new Date(selectedDate);
                     startOfWeek.setDate(startOfWeek.getDate() - ((startOfWeek.getDay() === 0 ? 6 : startOfWeek.getDay() - 1)));
                     for (var i = 0; i < 6; i++) {
                         var date = new Date(startOfWeek);
                         date.setDate(date.getDate() + i);
                         document.getElementById('day' + (i+1)).textContent = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][i] + ' (' + date.toLocaleDateString('pt-PT') + ')';
+                        // Set the data-date attribute of each cell in this column to the date
+                        document.querySelectorAll('[data-day="' + i + '"]').forEach(function(cell) {
+                            cell.setAttribute('data-date', date.toLocaleDateString('pt-PT'));
+                        });
+                    }
+
+                    // Only submit the form if the date selector has a value
+                    if (shouldSubmitForm) {
+                        document.forms[0].submit();
                     }
                 }
+
+                // Call updateHeaders when the page loads
+                updateHeaders();
             </script>
             </tbody>
         </table>

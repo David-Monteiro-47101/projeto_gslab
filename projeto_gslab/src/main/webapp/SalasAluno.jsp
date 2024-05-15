@@ -20,9 +20,16 @@
             margin: 10px;
             font-size: 20px; /* Aumenta o tamanho da letra dos botões */
         }
+        #login {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            font-size: 20px; /* Aumenta o tamanho da letra do link "Login" */
+        }
     </style>
 </head>
 <body class="text-center">
+<a id="login" href="Login">Login</a>
 <div class="container">
     <h1 class="display-4 font-weight-bold">Departamento DEETC</h1>
     <p class="lead">Escolha a sala:</p>
@@ -31,7 +38,7 @@
 		    ArrayList<String> salas = (ArrayList<String>) request.getAttribute("salas");
 		    for(String sala : salas) {
 		%>
-		    <a href="Calendario?sala=<%= sala %>" class="btn btn-outline-dark btn-lg"><%= sala %></a>
+		    <a href="CalendarioAluno?sala=<%= sala %>" class="btn btn-outline-dark btn-lg"><%= sala %></a>
 		<% 
 		    }
 		%>

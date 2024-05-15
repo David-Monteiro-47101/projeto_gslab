@@ -90,6 +90,8 @@ public class Reserva4 extends HttpServlet {
                 int rowsAffected = cp.executeUpdate(query);
                 System.out.println("Rows affected: " + rowsAffected);
                 
+                if (rowsAffected == -1)
+                	System.out.println("Erro com a base de dados");
                 if (rowsAffected == 0) {
                     System.out.println("Esse slot já está ocupado: Dia " + dia + ", Slot " + numeroSlot);
                 } else {
@@ -99,7 +101,7 @@ public class Reserva4 extends HttpServlet {
         }
         
         // Encaminhamento para a página de destino
-        response.sendRedirect("Salas");
+        response.sendRedirect("SalasAluno");
     }
 
     	

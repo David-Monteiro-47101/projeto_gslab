@@ -11,8 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/Salas")
-public class Salas extends HttpServlet {
+@WebServlet("/SalasAluno")
+public class SalasAluno extends HttpServlet {
 	
     private static final long serialVersionUID = 1L;
     private static DataBaseConfig cp = null;
@@ -53,7 +53,7 @@ public class Salas extends HttpServlet {
         //dataBaseManager.disconnect();
         
         response.setContentType("text/html; charset=UTF-8");
-        getServletContext().getRequestDispatcher("/SalasAluno.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/Salas.jsp").forward(request, response);
         
     }
     
@@ -61,4 +61,3 @@ public class Salas extends HttpServlet {
         doGet(request, response);
     }
 }
-
