@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Sala</title>
+    <title>Eliminar Sala</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         html, body {
@@ -20,14 +20,14 @@
 <body>
     <div class="container">
         <div class="content text-center">
-            <h1>Selecione a sala que quer editar</h1>
+            <h1>Selecione a sala que quer eliminar</h1>
 
             <%
             ArrayList<String> salas = (ArrayList<String>) request.getAttribute("salas");
             %>
 
             <div class="select-container">
-                <form action="EditarSala" method="post" accept-charset="UTF-8">
+                <form action="EliminarSala" method="post" accept-charset="UTF-8">
                     <div class="form-group d-flex justify-content-center">
                         <label for="Sala" class="mr-2">Sala:</label>
                         <select id="Sala" name="Sala" class="form-control" style="width: 300px;">
@@ -45,7 +45,7 @@
                             %>
                         </select>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Editar Sala">
+                    <input type="submit" class="btn btn-primary" value="Eliminar Sala">
                 </form>
             </div>
             

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.ArrayList" %>
+<%@ page import="DAO.Agendamento" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,12 +31,23 @@
 </head>
 <body>
 <%
-     String sala = (String)request.getAttribute("sala");
+    ArrayList<Agendamento> agendamentos = (ArrayList<Agendamento>) request.getAttribute("agendamentos");
+    String sala = (String) request.getAttribute("sala");
+    String data = (String) request.getAttribute("data"); // Get the selected date from the request
+
+    if (agendamentos != null) {
+        for (Agendamento agendamento : agendamentos) {
+            System.out.println("jsp: " + agendamento);
+        }
+    } else {
+        System.out.println("No agendamentos found.");
+    }
 %>
+
 <div class="table-container">
     <h2 class="room-name"><%= sala %></h2> <!-- Adiciona o nome da sala -->
-    <form action="CalendarioAluno" method="post">
-        <input class="selector" type="date" id="dateSelector" name="data" onchange="updateHeaders()">
+    <form action="CalendarioAluno3" method="post">
+        <input class="selector" type="date" id="dateSelector" name="data" onchange="onDateChange()" value="<%= data %>"> <!-- Set the value of the date picker -->
         <input type="hidden" name="sala" id="salaInput" value="<%= sala %>"> <!-- Adiciona o nome da sala -->
     </form>
     <div class="scrollable-table">
@@ -54,6 +66,7 @@
             <tbody>
             <script>
                 var selectedRoom = "<%= sala %>"; // Nome da sala
+                var initialDate = '<%= data %>'; // Get the initial date from the JSP
 
                 var startHour = 8;
                 var endHour = 23;
@@ -96,14 +109,17 @@
                             cell.setAttribute('data-date', date.toLocaleDateString('pt-PT'));
                         });
                     }
+                }
 
-                    // Only submit the form if the date selector has a value
-                    if (shouldSubmitForm) {
+                function onDateChange() {
+                    updateHeaders();
+                    // If the selected date is different from the initial date, submit the form
+                    if (document.getElementById('dateSelector').value !== initialDate) {
                         document.forms[0].submit();
                     }
                 }
 
-                // Call updateHeaders when the page loads
+                // Call updateHeaders when the page is loaded
                 updateHeaders();
             </script>
             </tbody>

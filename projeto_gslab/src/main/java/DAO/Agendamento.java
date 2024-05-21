@@ -98,4 +98,19 @@ public class Agendamento {
     public void setUtilizador_email(String utilizador_email) {
         this.utilizador_email = utilizador_email;
     }
+    
+    @Override
+    public String toString() {
+        return "Agendamento{" +
+            "id=" + id +
+            ", disciplina='" + disciplina + '\'' +
+            ", turma='" + turma + '\'' +
+            ", dia=" + dia +
+            ", professor='" + professor + '\'' +
+            ", observacoes='" + observacoes + '\'' +
+            ", slot=" + slot +
+            ", sala_nome='" + sala_nome + '\'' +
+            ", utilizador_email='" + utilizador_email + '\'' +
+            '}';
+    }
 }

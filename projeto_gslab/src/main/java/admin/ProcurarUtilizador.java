@@ -1,10 +1,5 @@
 package admin;
 
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,11 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import projeto_gslab.DataBaseConfig;
 
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-@WebServlet("/ProcurarSala")
-public class ProcurarSala extends HttpServlet {
-	
-    private static final long serialVersionUID = 1L;
+@WebServlet("/ProcurarUtilizador")
+public class ProcurarUtilizador extends HttpServlet {
+	private static final long serialVersionUID = 1L;
     private static DataBaseConfig cp = null;
 
     public void init() throws ServletException {
@@ -33,36 +31,38 @@ public class ProcurarSala extends HttpServlet {
     	}
     }
     
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //DataBaseManager dataBaseManager = new DataBaseManager();
-        
-        String query = "SELECT * FROM projeto.sala"; 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String query = "SELECT * FROM projeto.utilizador"; 
         ResultSet rs = cp.executeQuery(query);
         
-        ArrayList<String> salas = new ArrayList<>();
+        ArrayList<String> utilizadores = new ArrayList<>();
 		
         try {
             while (rs.next()) {
-            	salas.add(rs.getString("nome")); 
+            	utilizadores.add(rs.getString("email")); 
             }
-            request.setAttribute("salas", salas);
+            request.setAttribute("utilizadores", utilizadores);
         } catch (SQLException e) {
             System.err.println("Erro ao executar a consulta: " + e.getMessage());
         }
         
         response.setContentType("text/html; charset=UTF-8");
-
+        
         String action = request.getParameter("action");
 
         if ("delete".equals(action)) {
-            getServletContext().getRequestDispatcher("/ProcurarSalaEliminar.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/ProcurarUtilizadorEliminar.jsp").forward(request, response);
         } else {
-            getServletContext().getRequestDispatcher("/ProcurarSala.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/ProcurarUtilizador.jsp").forward(request, response);
         }
-    }
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
 
 }
+
+
+
+
+

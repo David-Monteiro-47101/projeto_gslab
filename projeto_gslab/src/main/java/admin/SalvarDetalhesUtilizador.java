@@ -3,6 +3,7 @@ package admin;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,8 +14,8 @@ import jakarta.servlet.http.HttpSession;
 import projeto_gslab.DataBaseConfig;
 
 
-@WebServlet("/SalvarDetalhesSala")
-public class SalvarDetalhesSala extends HttpServlet {
+@WebServlet("/SalvarDetalhesUtilizador")
+public class SalvarDetalhesUtilizador extends HttpServlet {
 	
     private static final long serialVersionUID = 1L;
     private static DataBaseConfig cp = null;
@@ -34,41 +35,50 @@ public class SalvarDetalhesSala extends HttpServlet {
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String name = request.getParameter("newName");
+		String newEmail = request.getParameter("newEmail");
+		String password = request.getParameter("password");
+		String[] role = request.getParameterValues("role");
     	
-        //DataBaseManager dataBaseManager = new DataBaseManager();
-        
-    	String newName = request.getParameter("newName");
-    	String location = request.getParameter("location");
-    	String capacity = request.getParameter("capacity");
+    	HttpSession sessionEditarUtilizador = request.getSession();
+    	String email = (String) sessionEditarUtilizador.getAttribute("email");
     	
-    	HttpSession sessionEditarSala = request.getSession();
-    	String name = (String) sessionEditarSala.getAttribute("name");
-    	
-    	System.out.println("newName: " + newName);
     	System.out.println("name: " + name);
-    	System.out.println("location: " + location);
-    	System.out.println("capacity: " + capacity);
+    	System.out.println("email: " + email);
+		System.out.println("newEmail: " + newEmail);
+		System.out.println("password: " + password);
+		System.out.println("role: " + Arrays.toString(role));
     	
-    	if (isUsernameInUse(newName) && !name.equals(newName)) {
-            System.out.println("Uma sala com esse nome já existe: " + name);
-            request.setAttribute("alert", "Uma sala com esse nome já existe.");
+    	if (isUsernameInUse(newEmail) && !email.equals(newEmail)) {
+            System.out.println("Um Utilizador com esse email já existe: " + newEmail);
+            request.setAttribute("alert", "Um Utilizador com esse email já existe.");
             response.setContentType("text/html; charset=UTF-8");
             getServletContext().getRequestDispatcher("/Admin.jsp").forward(request, response);
     	}
-        
+
+        String deleteQuery = "DELETE FROM projeto.utilizador_tem_role WHERE email = '" + email + "'";
+        cp.executeUpdate(deleteQuery);
+
         // Inserir informações do usuário
-    	String query = "UPDATE projeto.sala " +
-                "SET nome = '" + newName + "', capacidade = " + capacity + ", localizacao = '" + location + "' " +
-                "WHERE nome = '" + name + "'";
-    	
-    	int rowsAffected = cp.executeUpdate(query);
+        String query = "UPDATE projeto.utilizador " +
+                "SET nome = '" + name + "', email = '" + newEmail + "', password = '" + password + "' " +
+                "WHERE email = '" + email + "'";
+
+        int rowsAffected = cp.executeUpdate(query);
+
+        // Inserir informações das roles de um usuário
+        for (String papel : role) {
+            String insertQuery = "INSERT INTO projeto.utilizador_tem_role (email, papel) VALUES ('" + newEmail + "', '" + papel + "')";
+            cp.executeUpdate(insertQuery);
+        }
     	
         if (rowsAffected == 0) {
             System.out.println("Erro: " + name);
             request.setAttribute("alert", "Erro:");
         } else {
-            System.out.println("Sala editada com sucesso: " + name);
-            request.setAttribute("alert", "Sala editada com sucesso.");
+            System.out.println("Utilizador editado com sucesso: " + name);
+            request.setAttribute("alert", "Utilizador editado com sucesso.");
         }
         
         //dataBaseManager.disconnect();
@@ -84,20 +94,21 @@ public class SalvarDetalhesSala extends HttpServlet {
         doGet(request, response);
     }
     
-    private boolean isUsernameInUse(String newUsername) {
-    	
-        String query = "SELECT nome FROM projeto.sala WHERE nome = '" + newUsername + "'";
+    private boolean isUsernameInUse(String newEmail) {    	
+        String query = "SELECT email FROM projeto.utilizador WHERE email = '" + newEmail + "'";
         
         ResultSet rs = cp.executeQuery(query);
 
         try {
             return rs.next(); // Retorna true se houver resultados, indicando que o username está em uso
         } catch (SQLException e) {
+            System.out.println("Erro ao executar a ASDGFJWABDAVDPASDASYDIVADASconsulta: " + e.getMessage());
             e.printStackTrace();
             System.err.println(e.toString());
-        } 
+
 
         return false;
     }
 
+    }
 }

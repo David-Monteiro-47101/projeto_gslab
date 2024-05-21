@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import projeto_gslab.DataBaseConfig;
-import projeto_gslab.DataBaseManager;
 
 @WebServlet("/CriarUtilizador")
 public class CriarUtilizador extends HttpServlet {

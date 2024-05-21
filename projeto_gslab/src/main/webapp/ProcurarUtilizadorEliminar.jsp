@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Sala</title>
+    <title>Eliminar Utilizador</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         html, body {
@@ -20,32 +20,32 @@
 <body>
     <div class="container">
         <div class="content text-center">
-            <h1>Selecione a sala que quer editar</h1>
+            <h1>Selecione o utilizador que quer eliminar</h1>
 
             <%
-            ArrayList<String> salas = (ArrayList<String>) request.getAttribute("salas");
+            ArrayList<String> utilizadores = (ArrayList<String>) request.getAttribute("utilizadores");
             %>
 
             <div class="select-container">
-                <form action="EditarSala" method="post" accept-charset="UTF-8">
+                <form action="EliminarUtilizador" method="post" accept-charset="UTF-8">
                     <div class="form-group d-flex justify-content-center">
-                        <label for="Sala" class="mr-2">Sala:</label>
-                        <select id="Sala" name="Sala" class="form-control" style="width: 300px;">
+                        <label for="Utilizador" class="mr-2">Utilizador:</label>
+                        <select id="Utilizador" name="Utilizador" class="form-control" style="width: 300px;">
                             <option value="" selected disabled hidden></option>
 
                             <%
-                            if(salas != null){
-                                for (int i = 0; i < salas.size(); i++) {
-                                    String sala = salas.get(i);
+                            if(utilizadores != null){
+                                for (int i = 0; i < utilizadores.size(); i++) {
+                                    String utilizador = utilizadores.get(i);
                             %>
-                                    <option value="<%=sala%>"><%=sala%></option>
+                                    <option value="<%=utilizador%>"><%=utilizador%></option>
                             <%	
                                 }
                             }
                             %>
                         </select>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Editar Sala">
+                    <input type="submit" class="btn btn-primary" value="Eliminar Utilizador">
                 </form>
             </div>
             

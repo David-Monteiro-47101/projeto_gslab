@@ -38,7 +38,7 @@
 		    ArrayList<String> salas = (ArrayList<String>) request.getAttribute("salas");
 		    for(String sala : salas) {
 		%>
-		    <a href="CalendarioAluno?sala=<%= sala %>" class="btn btn-outline-dark btn-lg"><%= sala %></a>
+		    <a href="CalendarioAluno3?sala=<%= sala %>" class="btn btn-outline-dark btn-lg"><%= sala %></a>
 		<% 
 		    }
 		%>

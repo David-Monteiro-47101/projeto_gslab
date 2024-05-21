@@ -18,10 +18,10 @@
                 <button onclick="window.location.href='CriarSala.html'" class="btn btn-primary w-100">Criar Sala</button>
             </div>
             <div class="col-4 mb-2">
-                <button onclick="window.location.href='ProcurarSala'" class="btn btn-primary w-100">Editar Sala</button>
+                <button onclick="window.location.href='ProcurarSala?action=edit'" class="btn btn-primary w-100">Editar Sala</button>
             </div>
             <div class="col-4 mb-2">
-                <button onclick="window.location.href='EliminarSala.html'" class="btn btn-primary w-100">Eliminar Sala</button>
+                <button onclick="window.location.href='ProcurarSala?action=delete'" class="btn btn-primary w-100">Eliminar Sala</button>
             </div>
         </div>
         <div class="row justify-content-around">
@@ -29,10 +29,10 @@
                 <button onclick="window.location.href='CriarUtilizador.html'" class="btn btn-primary w-100">Criar Utilizador</button>
             </div>
             <div class="col-4">
-                <button onclick="window.location.href='EditarUtilizador.html'" class="btn btn-primary w-100">Editar Utilizador</button>
+                <button onclick="window.location.href='ProcurarUtilizador?action=edit'" class="btn btn-primary w-100">Editar Utilizador</button>
             </div>
             <div class="col-4">
-                <button onclick="window.location.href='EliminarUtilizador.html'" class="btn btn-primary w-100">Eliminar Utilizador</button>
+                <button onclick="window.location.href='ProcurarUtilizador?action=delete'" class="btn btn-primary w-100">Eliminar Utilizador</button>
             </div>
         </div>
         
@@ -46,8 +46,6 @@
     </div>
 </div>
 <script>
-    // Substitua "admin" pelo local onde você armazenou o nome do administrador após o login bem-sucedido
-    //var admin = "XPTO";
     document.getElementById('welcome-message').textContent = 'Admin Menu';// + admin;
 </script>
 </body>

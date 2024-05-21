@@ -44,12 +44,23 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>fsffs</display-name>
-    <servlet-name>fsffs</servlet-name>
-    <servlet-class>projeto_gslab.fsffs</servlet-class>
+    <display-name>CalendarioAluno3</display-name>
+    <servlet-name>CalendarioAluno3</servlet-name>
+    <servlet-class>projeto_gslab.CalendarioAluno3</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>fsffs</servlet-name>
-    <url-pattern>/fsffs</url-pattern>
+    <servlet-name>CalendarioAluno3</servlet-name>
+    <url-pattern>/CalendarioAluno3</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <description></description>
+    <display-name>Salas</display-name>
+    <servlet-name>Salas</servlet-name>
+    <servlet-class>projeto_gslab.Salas</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Salas</servlet-name>
+    <url-pattern>/Salas</url-pattern>
   </servlet-mapping>
 </web-app>

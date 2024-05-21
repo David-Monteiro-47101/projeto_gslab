@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import projeto_gslab.DataBaseConfig;
-import projeto_gslab.DataBaseManager;
 
 @WebServlet("/CriarSala")
 public class CriarSala extends HttpServlet {

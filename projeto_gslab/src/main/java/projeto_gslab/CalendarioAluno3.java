@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/CalendarioAluno")
-public class CalendarioAluno extends HttpServlet {
+
+public class CalendarioAluno3 extends HttpServlet {
 	
     private static final long serialVersionUID = 1L;
     private static DataBaseConfig cp = null;
@@ -56,9 +56,6 @@ public class CalendarioAluno extends HttpServlet {
         
         System.out.println("Calendario sala: " + sala);
         System.out.println("Calendario data: " + data);
-
-        // Now you can use the date and room name for your logic
-        // ...
         
         String query = "SELECT * "
                 + "FROM projeto.agendamento "
@@ -72,9 +69,10 @@ public class CalendarioAluno extends HttpServlet {
         for (Agendamento agendamento : agendamentos) 
             System.out.println(agendamento);
 
-        // Forward the request back to the JSP with the data as an attribute
+
+        request.setAttribute("agendamentos", agendamentos);
         request.setAttribute("sala", sala);
-        request.setAttribute("data", data); // Pass the selected date to the JSP
+        request.setAttribute("data", data); 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/CalendarioAluno.jsp");
         dispatcher.forward(request, response);
     }

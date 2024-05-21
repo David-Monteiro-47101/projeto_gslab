@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/CalendarioAluno")
-public class CalendarioAluno extends HttpServlet {
+@WebServlet("/CalendarioAluno2")
+public class CalendarioAluno2 extends HttpServlet {
 	
     private static final long serialVersionUID = 1L;
     private static DataBaseConfig cp = null;
