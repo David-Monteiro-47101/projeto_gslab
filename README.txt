@@ -8,4 +8,6 @@
 6 - Correr o "startTomcat"
 7 - Colocar no browser: https://localhost:8443/projeto_gslab/
 
-Nota - Para ver codigo ou importar para o eclipse use o .war
+Notas :
+Para ver codigo ou importar para o eclipse use o .war
+No ficheiro Users tem a informacao utilizadores que existem na BD
