@@ -7,3 +7,5 @@
 5 - Alterar o path do "startTomcat" e do "stopTomcat" para o path onde instalou o jdk
 6 - Correr o "startTomcat"
 7 - Colocar no browser: https://localhost:8443/projeto_gslab/
+
+Nota - Para ver codigo ou importar para o eclipse use o .war
