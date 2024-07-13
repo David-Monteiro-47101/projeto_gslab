@@ -3,3 +3,4 @@
 3 - Download da pasta apache-tomcat-10.1.15
 4 - Download da pasta BD
 5 - Alterar no ficheiro web.xml o caminho para a pasta BD nova
+6 - Run on server projeto_gslab 
