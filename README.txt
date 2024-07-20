@@ -9,5 +9,5 @@
 7 - Colocar no browser: https://localhost:8443/projeto_gslab/
 
 Notas :
-Para ver codigo ou importar para o eclipse use o .war
+Para ver codigo ou importar para o eclipse use o .war ou o zip
 No ficheiro Users tem a informacao utilizadores que existem na BD
